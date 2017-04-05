@@ -1,0 +1,87 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{carbonlabel}[2017/04/05 Carbon Labeling Pattern Visualization]
+
+\RequirePackage{kvoptions}%
+\RequirePackage{tikz}%
+\RequirePackage{ifthen}%
+
+\SetupKeyvalOptions {%
+	family=CL,%
+	prefix=CL@%
+}%
+%%%
+%% Options
+%%%
+%% Numbering
+\DeclareBoolOption[false]{numbering}%
+%% No border
+\DeclareBoolOption[false]{noborder}%
+\DeclareComplementaryOption{border}{noborder}%
+%% Circle size
+\DeclareStringOption[1]{size}%
+%% Measurement unit
+\DeclareStringOption[mm]{unit}%
+%% LabeledFill
+\DeclareStringOption[red]{lfill}%
+%% UnLabeledFill
+\DeclareStringOption[gray]{ufill}%
+%% LabeledBorder
+\DeclareStringOption[black]{lborder}%
+%% UnLabeledBorder
+\DeclareStringOption[black]{uborder}%
+\ProcessKeyvalOptions*
+
+%%%
+%% Definition of commands/environments
+%%%
+
+\newcommand{\setlabelingoptions}[1] {%
+\setkeys{CL}{#1}%
+}%
+\newcommand{\labeling}[3][]{%
+\setkeys{CL}{#1}%
+%% Change l/uborder to l/ufill
+\ifthenelse{\boolean{CL@noborder}}{%
+	%% Change l/uborder to l/ufill
+	\setkeys{CL}{uborder=\CL@ufill}%
+	\setkeys{CL}{lborder=\CL@lfill}%
+}{}
+\xdef\radius{\CL@size}%
+\pgfmathparse{2*\radius}\xdef\diameter{\pgfmathresult}%
+\pgfmathparse{dim(#2)*\diameter}\xdef\height{\pgfmathresult}%
+\pgfmathparse{\height/2}\xdef\bline{\pgfmathresult}%
+\tikz[baseline=-\bline \CL@unit - .5ex]{%
+  \edef\labeling{#3}%
+  \edef\y{0}%
+  \edef\i{0}%
+  \foreach \n in #2 {%
+    \foreach \x in {1,...,\n} {%
+      \ifthenelse{\equal{\labeling}{uni13} \OR \equal{\labeling}{u13} \OR \equal{\labeling}{u}}{
+      	\edef\fc{\CL@lfill}
+      	\edef\bc{\CL@lborder}
+      }{
+        \ifthenelse{\equal{\labeling}{uni12} \OR \equal{\labeling}{u12} \OR \equal{\labeling}{12} \OR \equal{\labeling}{}}{
+        	\edef\fc{\CL@ufill}
+        	\edef\bc{\CL@uborder}
+        }{
+          \pgfmathparse{\labeling[\i]}
+          \ifthenelse{\pgfmathresult=1}{%
+          	\edef\fc{\CL@lfill}
+          	\edef\bc{\CL@lborder}
+          }{
+          	\edef\fc{\CL@ufill}
+          	\edef\bc{\CL@uborder}
+          }
+        }%
+      }%
+      \pgfmathparse{(\x-1)*\diameter}%
+      \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit) circle (\radius \CL@unit);
+      \pgfmathparse{\i+1}%
+      \xdef\i{\pgfmathresult}%
+    }
+    \pgfmathparse{\y+\diameter}%
+    \xdef\y{\pgfmathresult}%
+  }
+}}
+
+\endinput
