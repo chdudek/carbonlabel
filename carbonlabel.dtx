@@ -1,0 +1,204 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2017 by Christian-Alexander Dudek
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+% \fi
+% \iffalse
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<package>\ProvidesPackage{carbonlabel}
+%<package> [2017/04/05 v1.0 Carbon Labeling Pattern Visualization]
+%<package>\RequirePackage{kvoptions}
+%<package>\RequirePackage{tikz}
+%<package>\RequirePackage{ifthen}
+%<package>\SetupKeyvalOptions {%
+%<package>    family=CL,%
+%<package>    prefix=CL@%
+%<package>}
+%<package>% Numbering
+%<package>\DeclareBoolOption[false]{numbering}%
+%<package>% No border
+%<package>\DeclareBoolOption[false]{noborder}%
+%<package>\DeclareComplementaryOption{border}{noborder}%
+%<package>% Circle size
+%<package>\DeclareStringOption[1]{size}%
+%<package>% Measurement unit
+%<package>\DeclareStringOption[mm]{unit}%
+%<package>% LabeledFill
+%<package>\DeclareStringOption[red]{lfill}%
+%<package>% UnLabeledFill
+%<package>\DeclareStringOption[gray]{ufill}%
+%<package>% LabeledBorder
+%<package>\DeclareStringOption[black]{lborder}%
+%<package>% UnLabeledBorder
+%<package>\DeclareStringOption[black]{uborder}%
+%<package>\ProcessKeyvalOptions*
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{carbonlabel}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+%\OnlyDescription
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle=The \textsf{carbonlabel} package: Carbon Labeling Pattern Visualization,
+  pdfauthor=Christian-Alexander Dudek,
+  pdfsubject={carbonlabel LaTeX package manual},
+  colorlinks=true
+}
+\begin{document}
+\DocInput{carbonlabel.dtx}
+\end{document}
+%</driver>
+% \fi
+% \CheckSum{0}
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \changes{v1.0}{2017/04/05}{Initial version}
+%
+% \GetFileInfo{carbonlabel.sty}
+%
+% \DoNotIndex{\#,\$,\%,\&,\@,\\,\{,\},\^,\_,\~,\ }
+% \DoNotIndex{\@ne}
+% \DoNotIndex{\advance,\begingroup,\catcode,\closein}
+% \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
+%
+% \title{The \textsf{carbonlabel} package: Carbon Labeling Pattern Visualization\thanks{This document corresponds to \textsf{carbonlabel}~\fileversion, dated~\filedate.}}
+% \author{Christian-Alexander Dudek \\ \texttt{c.dudek@me.com}}
+%
+% \maketitle
+% \begin{abstract}
+%   Put text here.
+% \end{abstract}
+%
+% \vspace{2in}
+%
+% \subsection*{License}
+% \href{https://www.gnu.org/licenses/gpl-3.0.txt}{GNU General Public License (GPL)} version 3.
+% \pagebreak
+%
+% \tableofcontents
+%
+% \newpage
+%
+% \section{Introduction}
+%
+% \section{Package options}
+%
+% \section{Usage}
+%
+% \DescribeMacro{\setlabelingoptions}
+% Put description of |setlabelingoptions| here.
+% |\setlabelingoptions|\marg{kwargs}
+%
+% \DescribeMacro{\labeling}
+% Put description of |labeling| here.
+% |\labeling|\oarg{kwargs}\marg{number of carbons per row}\marg{labeling pattern}
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+% \section{Implementation}
+%
+% \begin{macro}{\setlabelingoptions}
+% \changes{v1.0.1}{2017/04/05}{Added macro}
+% Put explanation of |\setlabelingoptions|’s implementation here.
+%    \begin{macrocode}
+\newcommand{\setlabelingoptions}[1] {%
+\setkeys{CL}{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\labeling}
+% Put explanation of |\labeling|’s implementation here.
+%
+% \labeling{{6}}{}
+%
+%    \begin{macrocode}
+\newcommand{\labeling}[3][]{%
+\setkeys{CL}{#1}%
+% Change l/uborder to l/ufill
+\ifthenelse{\boolean{CL@noborder}}{%
+% Change l/uborder to l/ufill
+    \setkeys{CL}{uborder=\CL@ufill}%
+    \setkeys{CL}{lborder=\CL@lfill}%
+}{}
+\xdef\radius{\CL@size}%
+\pgfmathparse{2*\radius}\xdef\diameter{\pgfmathresult}%
+\pgfmathparse{dim(#2)*\diameter}\xdef\height{\pgfmathresult}%
+\pgfmathparse{\height/2}\xdef\bline{\pgfmathresult}%
+\tikz[baseline=-\bline \CL@unit - .5ex]{%
+  \edef\labeling{#3}%
+  \edef\y{0}%
+  \edef\i{0}%
+  \foreach \n in #2 {%
+    \foreach \x in {1,...,\n} {%
+      \ifthenelse{
+      \equal{
+        \labeling}{uni13} \OR
+        \equal{\labeling}{u13} \OR
+        \equal{\labeling}{u}}{
+          \edef\fc{\CL@lfill}
+          \edef\bc{\CL@lborder}
+      }{
+        \ifthenelse{%
+        \equal{\labeling}{uni12} \OR
+        \equal{\labeling}{u12} \OR
+        \equal{\labeling}{12} \OR
+        \equal{\labeling}{}}{
+          \edef\fc{\CL@ufill}
+          \edef\bc{\CL@uborder}
+        }{
+          \pgfmathparse{\labeling[\i]}
+          \ifthenelse{\pgfmathresult=1}{%
+            \edef\fc{\CL@lfill}
+            \edef\bc{\CL@lborder}
+          }{
+            \edef\fc{\CL@ufill}
+            \edef\bc{\CL@uborder}
+          }
+        }%
+      }%
+      \pgfmathparse{(\x-1)*\diameter}%
+      \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit)
+        circle (\radius \CL@unit);
+      \pgfmathparse{\i+1}%
+      \xdef\i{\pgfmathresult}%
+    }
+    \pgfmathparse{\y+\diameter}%
+    \xdef\y{\pgfmathresult}%
+  }
+}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \Finale
+\endinput

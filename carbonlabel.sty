@@ -1,50 +1,63 @@
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{carbonlabel}[2017/04/05 Carbon Labeling Pattern Visualization]
-
-\RequirePackage{kvoptions}%
-\RequirePackage{tikz}%
-\RequirePackage{ifthen}%
-
+%%
+%% This is file `carbonlabel.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% carbonlabel.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2017 by Christian-Alexander Dudek
+%% 
+%% This program is free software: you can redistribute it and/or modify
+%% it under the terms of the GNU General Public License as published by
+%% the Free Software Foundation, either version 3 of the License, or
+%% (at your option) any later version.
+%% 
+%% This program is distributed in the hope that it will be useful,
+%% but WITHOUT ANY WARRANTY; without even the implied warranty of
+%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%% GNU General Public License for more details.
+%% 
+%% You should have received a copy of the GNU General Public License
+%% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+\ProvidesPackage{carbonlabel}
+ [2017/04/05 v1.0 Carbon Labeling Pattern Visualization]
+\RequirePackage{kvoptions}
+\RequirePackage{tikz}
+\RequirePackage{ifthen}
 \SetupKeyvalOptions {%
-	family=CL,%
-	prefix=CL@%
-}%
-%%%
-%% Options
-%%%
-%% Numbering
+    family=CL,%
+    prefix=CL@%
+}
+% Numbering
 \DeclareBoolOption[false]{numbering}%
-%% No border
+% No border
 \DeclareBoolOption[false]{noborder}%
 \DeclareComplementaryOption{border}{noborder}%
-%% Circle size
+% Circle size
 \DeclareStringOption[1]{size}%
-%% Measurement unit
+% Measurement unit
 \DeclareStringOption[mm]{unit}%
-%% LabeledFill
+% LabeledFill
 \DeclareStringOption[red]{lfill}%
-%% UnLabeledFill
+% UnLabeledFill
 \DeclareStringOption[gray]{ufill}%
-%% LabeledBorder
+% LabeledBorder
 \DeclareStringOption[black]{lborder}%
-%% UnLabeledBorder
+% UnLabeledBorder
 \DeclareStringOption[black]{uborder}%
 \ProcessKeyvalOptions*
-
-%%%
-%% Definition of commands/environments
-%%%
-
 \newcommand{\setlabelingoptions}[1] {%
 \setkeys{CL}{#1}%
-}%
+}
 \newcommand{\labeling}[3][]{%
 \setkeys{CL}{#1}%
-%% Change l/uborder to l/ufill
 \ifthenelse{\boolean{CL@noborder}}{%
-	%% Change l/uborder to l/ufill
-	\setkeys{CL}{uborder=\CL@ufill}%
-	\setkeys{CL}{lborder=\CL@lfill}%
+    \setkeys{CL}{uborder=\CL@ufill}%
+    \setkeys{CL}{lborder=\CL@lfill}%
 }{}
 \xdef\radius{\CL@size}%
 \pgfmathparse{2*\radius}\xdef\diameter{\pgfmathresult}%
@@ -56,26 +69,35 @@
   \edef\i{0}%
   \foreach \n in #2 {%
     \foreach \x in {1,...,\n} {%
-      \ifthenelse{\equal{\labeling}{uni13} \OR \equal{\labeling}{u13} \OR \equal{\labeling}{u}}{
-      	\edef\fc{\CL@lfill}
-      	\edef\bc{\CL@lborder}
+      \ifthenelse{
+      \equal{
+        \labeling}{uni13} \OR
+        \equal{\labeling}{u13} \OR
+        \equal{\labeling}{u}}{
+          \edef\fc{\CL@lfill}
+          \edef\bc{\CL@lborder}
       }{
-        \ifthenelse{\equal{\labeling}{uni12} \OR \equal{\labeling}{u12} \OR \equal{\labeling}{12} \OR \equal{\labeling}{}}{
-        	\edef\fc{\CL@ufill}
-        	\edef\bc{\CL@uborder}
+        \ifthenelse{%
+        \equal{\labeling}{uni12} \OR
+        \equal{\labeling}{u12} \OR
+        \equal{\labeling}{12} \OR
+        \equal{\labeling}{}}{
+          \edef\fc{\CL@ufill}
+          \edef\bc{\CL@uborder}
         }{
           \pgfmathparse{\labeling[\i]}
           \ifthenelse{\pgfmathresult=1}{%
-          	\edef\fc{\CL@lfill}
-          	\edef\bc{\CL@lborder}
+            \edef\fc{\CL@lfill}
+            \edef\bc{\CL@lborder}
           }{
-          	\edef\fc{\CL@ufill}
-          	\edef\bc{\CL@uborder}
+            \edef\fc{\CL@ufill}
+            \edef\bc{\CL@uborder}
           }
         }%
       }%
       \pgfmathparse{(\x-1)*\diameter}%
-      \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit) circle (\radius \CL@unit);
+      \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit)
+        circle (\radius \CL@unit);
       \pgfmathparse{\i+1}%
       \xdef\i{\pgfmathresult}%
     }
@@ -83,5 +105,6 @@
     \xdef\y{\pgfmathresult}%
   }
 }}
-
 \endinput
+%%
+%% End of file `carbonlabel.sty'.
