@@ -1,7 +1,8 @@
 # carbonlabel — Visualize <sup>13</sup>C labeled molecules in LaTeX
 `carbonlabel` is a LaTeX package that draws simple molecules with <sup>13</sup>C labeled carbon atoms.
 
-## Example
+**The package is currently under heavy development and not intended for productive usage!**
+
 Simple example:
 ``` latex
 \documentclass{minimal}
