@@ -32,22 +32,22 @@
     family=CL,%
     prefix=CL@%
 }
-% Numbering
+%% Numbering
 \DeclareBoolOption[false]{numbering}%
-% No border
+%% No border
 \DeclareBoolOption[false]{noborder}%
 \DeclareComplementaryOption{border}{noborder}%
-% Circle size
+%% Circle size
 \DeclareStringOption[1]{size}%
-% Measurement unit
+%% Measurement unit
 \DeclareStringOption[mm]{unit}%
-% LabeledFill
+%% LabeledFill
 \DeclareStringOption[red]{lfill}%
-% UnLabeledFill
+%% UnLabeledFill
 \DeclareStringOption[gray]{ufill}%
-% LabeledBorder
+%% LabeledBorder
 \DeclareStringOption[black]{lborder}%
-% UnLabeledBorder
+%% UnLabeledBorder
 \DeclareStringOption[black]{uborder}%
 \ProcessKeyvalOptions*
 \newcommand{\setlabelingoptions}[1] {%

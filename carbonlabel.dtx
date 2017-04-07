@@ -20,31 +20,6 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<package>\ProvidesPackage{carbonlabel}
 %<package> [2017/04/05 v1.0 Carbon Labeling Pattern Visualization]
-%<package>\RequirePackage{kvoptions}
-%<package>\RequirePackage{tikz}
-%<package>\RequirePackage{ifthen}
-%<package>\SetupKeyvalOptions {%
-%<package>    family=CL,%
-%<package>    prefix=CL@%
-%<package>}
-%<package>% Numbering
-%<package>\DeclareBoolOption[false]{numbering}%
-%<package>% No border
-%<package>\DeclareBoolOption[false]{noborder}%
-%<package>\DeclareComplementaryOption{border}{noborder}%
-%<package>% Circle size
-%<package>\DeclareStringOption[1]{size}%
-%<package>% Measurement unit
-%<package>\DeclareStringOption[mm]{unit}%
-%<package>% LabeledFill
-%<package>\DeclareStringOption[red]{lfill}%
-%<package>% UnLabeledFill
-%<package>\DeclareStringOption[gray]{ufill}%
-%<package>% LabeledBorder
-%<package>\DeclareStringOption[black]{lborder}%
-%<package>% UnLabeledBorder
-%<package>\DeclareStringOption[black]{uborder}%
-%<package>\ProcessKeyvalOptions*
 %
 %<*driver>
 \documentclass{ltxdoc}
@@ -126,7 +101,38 @@
 % \StopEventually{\PrintChanges\PrintIndex}
 %
 % \section{Implementation}
-%
+% The |carbonlabel| package relies on the packages |tikz|, |kvoptions| and |ifthen|.
+%    \begin{macrocode}
+\RequirePackage{kvoptions}
+\RequirePackage{tikz}
+\RequirePackage{ifthen}
+%    \end{macrocode}
+%    \begin{macrocode}
+\SetupKeyvalOptions {%
+    family=CL,%
+    prefix=CL@%
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+%% Numbering
+\DeclareBoolOption[false]{numbering}%
+%% No border
+\DeclareBoolOption[false]{noborder}%
+\DeclareComplementaryOption{border}{noborder}%
+%% Circle size
+\DeclareStringOption[1]{size}%
+%% Measurement unit
+\DeclareStringOption[mm]{unit}%
+%% LabeledFill
+\DeclareStringOption[red]{lfill}%
+%% UnLabeledFill
+\DeclareStringOption[gray]{ufill}%
+%% LabeledBorder
+\DeclareStringOption[black]{lborder}%
+%% UnLabeledBorder
+\DeclareStringOption[black]{uborder}%
+\ProcessKeyvalOptions*
+%    \end{macrocode}
 % \begin{macro}{\setlabelingoptions}
 % \changes{v1.0.1}{2017/04/05}{Added macro}
 % Put explanation of |\setlabelingoptions|’s implementation here.
