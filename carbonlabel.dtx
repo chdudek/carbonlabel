@@ -113,6 +113,7 @@
     prefix=CL@%
 }
 %    \end{macrocode}
+% \subsection{Initialization}
 %    \begin{macrocode}
 %% Numbering
 \DeclareBoolOption[false]{numbering}%
@@ -133,6 +134,14 @@
 \DeclareStringOption[black]{uborder}%
 \ProcessKeyvalOptions*
 %    \end{macrocode}
+%
+% \begin{macro}{\setlabelingoptions}
+%    \begin{macrocode}
+\def\@inlist#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\setlabelingoptions}
 % \changes{v1.0.1}{2017/04/05}{Added macro}
 % Put explanation of |\setlabelingoptions|’s implementation here.
@@ -159,48 +168,32 @@
 }{}
 \xdef\radius{\CL@size}%
 \pgfmathparse{2*\radius}\xdef\diameter{\pgfmathresult}%
-\pgfmathparse{dim(#2)*\diameter}\xdef\height{\pgfmathresult}%
+\pgfmathparse{dim({#2})*\diameter}\xdef\height{\pgfmathresult}%
 \pgfmathparse{\height/2}\xdef\bline{\pgfmathresult}%
-\tikz[baseline=-\bline \CL@unit - .5ex]{%
-  \edef\labeling{#3}%
+\tikz[baseline=-\bline \CL@unit]{%
+  \edef\pat{#3}%
   \edef\y{0}%
-  \edef\i{0}%
-  \foreach \n in #2 {%
+  \edef\i{1}%
+  \foreach \n in {#2} {%
     \foreach \x in {1,...,\n} {%
-      \ifthenelse{
-      \equal{
-        \labeling}{uni13} \OR
-        \equal{\labeling}{u13} \OR
-        \equal{\labeling}{u}}{
+      \if\@inlist{\i}{\pat}
           \edef\fc{\CL@lfill}
           \edef\bc{\CL@lborder}
-      }{
-        \ifthenelse{%
-        \equal{\labeling}{uni12} \OR
-        \equal{\labeling}{u12} \OR
-        \equal{\labeling}{12} \OR
-        \equal{\labeling}{}}{
-          \edef\fc{\CL@ufill}
-          \edef\bc{\CL@uborder}
-        }{
-          \pgfmathparse{\labeling[\i]}
-          \ifthenelse{\pgfmathresult=1}{%
+      \else
+        \if\@inlist{u}{\pat}
             \edef\fc{\CL@lfill}
             \edef\bc{\CL@lborder}
-          }{
+        \else
             \edef\fc{\CL@ufill}
             \edef\bc{\CL@uborder}
-          }
-        }%
-      }%
+        \fi
+      \fi
       \pgfmathparse{(\x-1)*\diameter}%
       \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit)
         circle (\radius \CL@unit);
-      \pgfmathparse{\i+1}%
-      \xdef\i{\pgfmathresult}%
+      \pgfmathparse{int(\i+1)}\xdef\i{\pgfmathresult}%
     }
-    \pgfmathparse{\y+\diameter}%
-    \xdef\y{\pgfmathresult}%
+    \pgfmathparse{\y+\diameter}\xdef\y{\pgfmathresult}%
   }
 }}
 %    \end{macrocode}
