@@ -50,8 +50,8 @@
 %% UnLabeledBorder
 \DeclareStringOption[black]{uborder}%
 \ProcessKeyvalOptions*
-\def\@inlist#1#2{TT\fi\begingroup
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+\def\@inlist#1#2{TT\fi\begingroup%
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}%
 \newcommand{\setlabelingoptions}[1] {%
 \setkeys{CL}{#1}%
 }
@@ -60,7 +60,7 @@
 \ifthenelse{\boolean{CL@noborder}}{%
     \setkeys{CL}{uborder=\CL@ufill}%
     \setkeys{CL}{lborder=\CL@lfill}%
-}{}
+}{}%
 \xdef\radius{\CL@size}%
 \pgfmathparse{2*\radius}\xdef\diameter{\pgfmathresult}%
 \pgfmathparse{dim({#2})*\diameter}\xdef\height{\pgfmathresult}%
@@ -87,10 +87,10 @@
       \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit)
         circle (\radius \CL@unit);
       \pgfmathparse{int(\i+1)}\xdef\i{\pgfmathresult}%
-    }
+    }%
     \pgfmathparse{\y+\diameter}\xdef\y{\pgfmathresult}%
-  }
-}}
+  }%
+}}%
 \endinput
 %%
 %% End of file `carbonlabel.sty'.

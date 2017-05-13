@@ -66,8 +66,10 @@
 % \DoNotIndex{\advance,\begingroup,\catcode,\closein}
 % \DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup}
 %
-% \title{The \textsf{carbonlabel} package: Carbon Labeling Pattern Visualization\thanks{This document corresponds to \textsf{carbonlabel}~\fileversion, dated~\filedate.}}
-% \author{Christian-Alexander Dudek \\ \texttt{chdudek at gmail dot com}}
+% \title{The \textsf{carbonlabel} package:\\
+% Visualize \textsuperscript{13}C labeled molecules in \LaTeX
+% \thanks{This document corresponds to \textsf{carbonlabel}~\fileversion, dated~\filedate.}}
+% \author{Christian-Alexander Dudek \\ \texttt{chdudek at gmail dot com} \\ \texttt{\href{http://www.github.com/chdudek/carbonlabel/}{github.com/chdudek/carbonlabel}}}
 %
 % \maketitle
 % \begin{abstract}
@@ -137,8 +139,8 @@
 %
 % \begin{macro}{\setlabelingoptions}
 %    \begin{macrocode}
-\def\@inlist#1#2{TT\fi\begingroup
-  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+\def\@inlist#1#2{TT\fi\begingroup%
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}%
 %    \end{macrocode}
 % \end{macro}
 %
@@ -165,7 +167,7 @@
 % Change l/uborder to l/ufill
     \setkeys{CL}{uborder=\CL@ufill}%
     \setkeys{CL}{lborder=\CL@lfill}%
-}{}
+}{}%
 \xdef\radius{\CL@size}%
 \pgfmathparse{2*\radius}\xdef\diameter{\pgfmathresult}%
 \pgfmathparse{dim({#2})*\diameter}\xdef\height{\pgfmathresult}%
@@ -192,10 +194,10 @@
       \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit)
         circle (\radius \CL@unit);
       \pgfmathparse{int(\i+1)}\xdef\i{\pgfmathresult}%
-    }
+    }%
     \pgfmathparse{\y+\diameter}\xdef\y{\pgfmathresult}%
-  }
-}}
+  }%
+}}%
 %    \end{macrocode}
 % \end{macro}
 %

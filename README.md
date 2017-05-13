@@ -4,19 +4,20 @@
 **The package is currently under heavy development and not intended for productive usage!**
 
 Simple example:
-``` latex
+```latex
 \documentclass{minimal}
 \usepackage{carbonlabel}
 \begin{document}
 
 % 6 atoms, 2 per row, uniformly 13C labeled
-\labeling{{2,2,2}}{u} [U-\textsuperscript{13}C] Glucose
+\labeling{2,2,2}{u} [U-\textsuperscript{13}C] Glucose
 \\[.5cm]
 % 6 atoms, in one row, 1,2-13C labeled
-\labeling{6}{{1,1,0,0,0,0}}  [1,2-\textsuperscript{13}C] Glucose
+\labeling{6}{1,2}  [1,2-\textsuperscript{13}C] Glucose
 
 \end{document}
 ```
 Produces:
 
-![carbonlabel exaple output](http://i.imgur.com/xA3HYwW.png)
+![carbonlabel exaple output](http://i.imgur.com/Ra8sWAq.png)
+
