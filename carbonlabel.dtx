@@ -191,7 +191,7 @@
         \fi
       \fi
       \pgfmathparse{(\x-1)*\diameter}%
-      \draw[fill=\fc, draw=\bc] (\pgfmathresult \CL@unit,-\y \CL@unit)
+      \draw[fill=\fc, draw=\bc, solid] (\pgfmathresult \CL@unit,-\y \CL@unit)
         circle (\radius \CL@unit);
       \pgfmathparse{int(\i+1)}\xdef\i{\pgfmathresult}%
     }%
